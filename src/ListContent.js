@@ -1,49 +1,16 @@
 import React from "react";
-import { useState } from "react";
-import { FaTrashCan } from "react-icons/fa6";
+// import { useState } from "react";
+import ItemsList from "./ItemsList";
 
-const ListContent = () => {
-  const [items, setItems] = useState([
-    { id: 1, checked: false, value: "Practice Coding" },
-    { id: 2, checked: true, value: "Review tickets" },
-    { id: 3, checked: true, value: "Do Exercise" },
-  ]);
-  const handleCheck = (id) => {
-    const listItems = items.map((item) =>
-      item.id === id ? { ...item, checked: !item.checked } : item
-    );
-    setItems(listItems);
-  };
-
-  const handleDelete = (id) => {
-    const newItems = items.filter((item) => item.id != id);
-    setItems(newItems);
-  };
+const ListContent = ({ items, handleCheck, handleDelete }) => {
   return (
     <main>
       {items.length ? (
-        <ul>
-          {items.map((item) => (
-            <li className="item" key={item.id}>
-              <input
-                type="checkbox"
-                checked={item.checked}
-                onChange={() => handleCheck(item.id)}
-              />
-              <label
-                style={item.checked ? { textDecoration: "line-through" } : null}
-                onDoubleClick={() => handleCheck(item.id)}
-              >
-                {item.value}
-              </label>
-              <FaTrashCan
-                role="button"
-                tabIndex={0}
-                onClick={() => handleDelete(item.id)}
-              />
-            </li>
-          ))}
-        </ul>
+        <ItemsList
+          items={items}
+          handleCheck={handleCheck}
+          handleDelete={handleDelete}
+        />
       ) : (
         <h1>Todo list is empty</h1>
       )}
